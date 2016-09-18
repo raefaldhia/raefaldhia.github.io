@@ -1,0 +1,11 @@
+#content {
+  margin-top: 50px;
+}
+
+nav .brand-logo {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-left: 2%;
+    padding: 0px 1% 0px 1%;
+    background-color: #0d47a1;
+}

@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawSeriesChart);
+
+            function handleQueryResponse(response) {     
+                if (response.isError()) {
+                    alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                    return;
+                }
+
+                data = response.getDataTable();
+                var options = {
+                    title: 'Hubungan Dapat dan Minat Mengajar',
+                    hAxis: {title: 'Dapat Mengajar', minValue: 0, maxValue: 16},
+                    vAxis: {title: 'Minat Mengajar', minValue: 0, maxValue: 16},
+                    bubble: {textStyle: {fontSize: 11, color: 'none'}}
+                };
+
+                var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+                chart.draw(data, options);
+
+            }
+
+            function drawSeriesChart() {
+                var queryString = encodeURIComponent('SELECT A, F, E, H, I');
+                var query  = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1jDRPxCBb54gfidOAcLrXMWVXmE63LD-688rxWdLvjCM/gviz/tq?gid=1474255978&headers=1&tq=' + queryString);
+
+                query.send(handleQueryResponse);
+            }
+    </script>
+  </head>
+  <body>
+    <div id="series_chart_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>

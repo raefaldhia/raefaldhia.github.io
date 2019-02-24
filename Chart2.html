@@ -24,7 +24,7 @@
             }
 
             function drawSeriesChart() {
-                var queryString = encodeURIComponent('SELECT A, D, E, F, C');
+                var queryString = encodeURIComponent('SELECT A, D, E, G');
                 var query  = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1jDRPxCBb54gfidOAcLrXMWVXmE63LD-688rxWdLvjCM/gviz/tq?gid=1761744223&headers=1&tq=' + queryString);
 
                 query.send(handleQueryResponse);

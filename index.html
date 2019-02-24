@@ -1,43 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="Raefaldhi Amartya Junior">
-    <meta name="description" content="">
+<html>
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawSeriesChart);
 
-    <title>raefaldhia.github.io</title>
+            function handleQueryResponse(response) {     
+                if (response.isError()) {
+                    alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                    return;
+                }
 
-    <link rel="author" href="https://github.com/raefaldhia">
-    <link rel="publisher" href="https://github.com/raefaldhia">
-    <link rel="canonical" href="raefaldhia.github.io">
+                data = response.getDataTable();
+                var options = {
+                    title: 'Hubungan Dapat dan Minat Mengajar',
+                    hAxis: {title: 'Dapat Mengajar', minValue: 0, maxValue: 16},
+                    vAxis: {title: 'Minat Mengajar', minValue: 0, maxValue: 16},
+                    bubble: {textStyle: {fontSize: 11, color: 'none'}}
+                };
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+                var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+                chart.draw(data, options);
+
+            }
+
+            function drawSeriesChart() {
+                var queryString = encodeURIComponent('SELECT A, F, E, H, I');
+                var query  = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1jDRPxCBb54gfidOAcLrXMWVXmE63LD-688rxWdLvjCM/gviz/tq?gid=1474255978&headers=1&tq=' + queryString);
+
+                query.send(handleQueryResponse);
+            }
+    </script>
   </head>
-  <body class="teal lighten-3">
-    <nav class="nav-wrapper blue darken-3">
-      <ul class="left" style="margin-left:2%">
-        <li class="active"><a href="#"><strong>Home</strong></a></li>
-      </ul>
-    </nav>
-    <div class="container">
-         <ul class="collection">
-           <li class="collection-item avatar">
-             <i class="material-icons circle green">desktop_windows</i>
-             <span class="title">Operating System</span>
-             <p>A hobby operating system</p>
-           </li>
-           <li class="collection-item avatar">
-             <i class="material-icons circle red">place</i>
-             <span class="title">Maps</span>
-             <p>Maps application for Haiku operating system</p>
-           </li>
-         </ul>
-      </div>
-    </div>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+  <body>
+    <div id="series_chart_div" style="width: 900px; height: 500px;"></div>
   </body>
 </html>
